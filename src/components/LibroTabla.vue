@@ -151,7 +151,7 @@ export default {
     },
     validarEntradas() {
       try {
-        //let validar = this.mensaje.autor.primerAutor;
+        let validar = this.mensaje.autor.primerAutor;
         let numero = 2;
         if (this.nuevoTitulo === null) {
           this.mensaje.titulo = "¡El título es obligatorio!";
