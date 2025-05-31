@@ -1,12 +1,14 @@
 <template>
   <div class="container">
     <div v-show="mostrar">
-      <h1>Libro Guardado</h1>
+      <h1>{{ mensajeFinal }}</h1>
     </div>
     <label for="id_titulo">T&iacute;tulo: </label>
     <input v-model="nuevoTitulo" id="id_titulo" type="text" />
+    <span v-if="mensaje.titulo">{{ mensaje.titulo }}</span>
     <label for="id_autor">Autor: </label>
     <input v-model="nuevoAutor" id="id_autor" type="text" />
+    <span v-if="mensaje.autor">{{ mensaje.autor }}</span>
     <label for="id_genero">G&eacute;nero: </label>
     <input v-model="nuevoGenero" id="id_genero" type="text" />
     <label for="id_anio_publicacion">A&ntilde;o de publicaci&oacute;n: </label>
@@ -54,8 +56,8 @@
 export default {
   data() {
     return {
-      nuevoTitulo: "Libro",
-      nuevoAutor: "Autor",
+      nuevoTitulo: null,
+      nuevoAutor: null,
       nuevoGenero: "Genero",
       nuevoAnioPublicacion: 0,
       nuevoNumPaginas: 0,
@@ -104,19 +106,30 @@ export default {
         },
       ],
       mostrar: false,
+      tituloMensaje: false,
+      apellidoMensaje: false,
+      mensaje: {
+        titulo: null,
+        autor: null,
+      },
+      mensajeFinal: false,
     };
   },
   methods: {
     agregarLibro() {
-      const nuevo = {
-        titulo: this.nuevoTitulo,
-        autor: this.nuevoAutor,
-        genero: this.nuevoGenero,
-        anioPublicacion: this.nuevoAnioPublicacion,
-        numPaginas: this.nuevoNumPaginas,
-      };
+      if (this.validarEntradas()) {
+        const nuevo = {
+          titulo: this.nuevoTitulo,
+          autor: this.nuevoAutor,
+          genero: this.nuevoGenero,
+          anioPublicacion: this.nuevoAnioPublicacion,
+          numPaginas: this.nuevoNumPaginas,
+        };
 
-      if (
+        this.lista.push(nuevo);
+        this.mostrar = true;
+
+        /*if (
         !nuevo.titulo.trim() ||
         !nuevo.autor.trim() ||
         !nuevo.genero.trim() ||
@@ -127,11 +140,44 @@ export default {
       } else {
         this.lista.push(nuevo);
         this.mostrar = true;
-      }
+      }*/
 
-      setTimeout(() => {
-        this.mostrar = false;
-      }, 2000);
+        setTimeout(() => {
+          this.mostrar = false;
+        }, 2000);
+        this.mensajeFinal = "Estudiante Guardado";
+        this.limpiarPagina();
+      }
+    },
+    validarEntradas() {
+      try {
+        //let validar = this.mensaje.autor.primerAutor;
+        let numero = 2;
+        if (this.nuevoTitulo === null) {
+          this.mensaje.titulo = "¡El título es obligatorio!";
+          numero--;
+          return false;
+        }
+        if (this.nuevoAutor === null) {
+          this.mensaje.autor = "¡El autor es obligatorio!";
+          numero--;
+          return false;
+        }
+        if (numero === 2) {
+          return true;
+        } else return false;
+      } catch (error) {
+        console.error("Ha ocurrido un problema :c");
+        console.error(error);
+        this.mostrar = true;
+        this.mensajeFinal = "Ha ocurrido un error en el sistema";
+      }
+    },
+    limpiarPagina() {
+      this.nuevoTitulo = null;
+      this.nuevoAutor = null;
+      this.mensaje.titulo = null;
+      this.mensaje.autor = null;
     },
   },
 };
@@ -226,5 +272,9 @@ td {
 
 tr:nth-child(even) td {
   background-color: #2a3440;
+}
+
+span {
+  color: #fff;
 }
 </style>
