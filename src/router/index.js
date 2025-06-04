@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import EstudianteView from '../views/EstudianteView.vue'
 import LibroTablaView from '../views/LibroTablaView.vue'
 import EstudianteTablaView from '../views/EstudianteTablaView.vue'
+import PokemonView from '../views/PokemonView.vue'
 
 const routes = [
   {
@@ -47,7 +48,11 @@ const routes = [
     path: '/contador',
     name: 'ContadorView',
     component: () => import(/* webpackChunkName: "ContadorView" */ '../views/ContadorView.vue')
-  }
+  }, {
+    path: '/pokemonAPI',
+    name: 'pokemonView',
+    component: PokemonView
+  },
 ]
 
 const router = createRouter({
