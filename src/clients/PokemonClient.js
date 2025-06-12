@@ -50,3 +50,7 @@ export const consumirPokemonFachada = async () => {
 export const obtenerOpcionesFachada = async (longitud) => {
     return await obtenerOpciones(longitud);
 }
+
+export function obtenerAleatorioFachada(min, max) {
+    return obtenerAleatorio(min, max);
+}
