@@ -53,6 +53,11 @@ const routes = [
     name: 'pokemonView',
     component: PokemonView
   },
+    {
+    path: '/componenteResponsivo',
+    name: 'ComponenteResponsivoView',
+    component: () => import(/* webpackChunkName: "Pokemon" */ '../views/ComponenteResponsivoView.vue')
+  },
 ]
 
 const router = createRouter({
